@@ -70,6 +70,13 @@ public class BoxFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        questionFragment.getView().setVisibility(View.GONE);
+        infoFragment.getView().setVisibility(View.GONE);
+    }
+
     public void initializeBox(String qrCodeId) {
         int awarenessQuestionId;
         int lifestyleQuestionId;
