@@ -133,7 +133,7 @@ public class QuestionFragment extends Fragment {
         }
 
         BoxFragment boxFragment = (BoxFragment) getParentFragment();
-        boxFragment.onQuestionAnswered(score, question.getType());
+        boxFragment.onQuestionAnswered(score, question.getType(), question.getId());
         final RadioGroup radioGroup = getView().findViewById(R.id.question_answers);
         radioGroup.clearCheck();
     }

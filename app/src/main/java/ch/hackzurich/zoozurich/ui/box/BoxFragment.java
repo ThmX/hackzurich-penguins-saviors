@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,11 @@ import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.QuestionType;
 import ch.hackzurich.zoozurich.core.ZooService;
+import ch.hackzurich.zoozurich.ui.guide.GuideFragment;
 import ch.hackzurich.zoozurich.ui.info.InfoFragment;
 import ch.hackzurich.zoozurich.ui.questions.QuestionFragment;
+
+import static androidx.navigation.Navigation.findNavController;
 
 
 enum BoxViewEnum {
@@ -36,6 +40,7 @@ public class BoxFragment extends Fragment {
     private InfoFragment infoFragment;
     private QuestionFragment questionFragment;
     private ZooService zooService;
+    private NavController navController;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -105,13 +110,20 @@ public class BoxFragment extends Fragment {
         mViewModel.getCurrentView().setValue(BoxViewEnum.INFO);
     }
 
-    public void onQuestionAnswered(int score, QuestionType type) {
+    public void onQuestionAnswered(int score, QuestionType type, int questionId) {
         zooService = ((MainActivity) getActivity()).getZooService();
         zooService.increaseScore(score, type);
+        zooService.addAnsweredQuestionId(questionId);
 
         if(type == QuestionType.LIFESTYLE) {
             questionFragment.getView().setVisibility(View.GONE);
             infoFragment.getView().setVisibility(View.GONE);
+
+            if (zooService.getAnsweredQuestions().size() == zooService.getQuestions().size()) {
+                // TODO That's really bad, refactor!
+                navController = ((GuideFragment) getParentFragment()).getNavController();
+                navController.navigate(R.id.navigation_summary);
+            }
         } else {
             setInfo(mViewModel.getInfoId().getValue());
         }

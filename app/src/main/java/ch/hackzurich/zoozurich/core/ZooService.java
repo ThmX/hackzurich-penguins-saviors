@@ -5,23 +5,26 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import ch.hackzurich.zoozurich.R;
 
 public class ZooService {
     private String name;
     private String specie;
-
     private HashMap<Integer, Question> questions;
     private HashMap<Integer, Info> infos;
     private int awarenessScore = 0;
     private int lifestyleScore = 0;
+    private HashSet<Integer> answeredQuestions;
 
     public ZooService() {
         questions = new HashMap<Integer, Question>();
         infos = new HashMap<Integer, Info>();
+        answeredQuestions = new HashSet<Integer>();
 
         questions.put(1, createQuestion(
+            1,
             "How long would you have to eat vegetarian to save as much CO2 as a flight from Zurich to New York produces?",
             QuestionType.AWARENESS,
             " A) one year ",
@@ -34,6 +37,7 @@ public class ZooService {
             1
         ));
         questions.put(2, createQuestion(
+            2,
             "How long did you have to travel by car to come to the Zoo Zurich?",
             QuestionType.LIFESTYLE,
             "A) We came by public transportation",
@@ -46,6 +50,7 @@ public class ZooService {
             4
         ));
         questions.put(3, createQuestion(
+            3,
             " How much plastic do big retail companies in switzerland save per year since plastic bags cost 5 rappen?",
             QuestionType.AWARENESS,
             " A) 850t ",
@@ -58,6 +63,7 @@ public class ZooService {
             4
         ));
         questions.put(4, createQuestion(
+            4,
             " What snack would you choose?",
             QuestionType.LIFESTYLE,
             "A) An apple",
@@ -70,6 +76,7 @@ public class ZooService {
             4
         ));
         questions.put(5, createQuestion(
+            5,
             "How many times a month does an average swiss person eat imported fish?",
             QuestionType.AWARENESS,
             " A) 4 times per month ",
@@ -82,6 +89,7 @@ public class ZooService {
             4
         ));
         questions.put(6, createQuestion(
+            6,
             " Which fish do you eat most often?",
             QuestionType.LIFESTYLE,
             "A) I don’t eat fish at all ",
@@ -108,14 +116,14 @@ public class ZooService {
                 R.mipmap.fish_consumption));
     }
 
-    private Question createQuestion(String text, QuestionType type, String answer1_text, int answer1_score, String answer2_text, int answer2_score, String answer3_text, int answer3_score, String answer4_text, int answer4_score) {
+    private Question createQuestion(int id, String text, QuestionType type, String answer1_text, int answer1_score, String answer2_text, int answer2_score, String answer3_text, int answer3_score, String answer4_text, int answer4_score) {
         ArrayList<Answer> answers = new ArrayList<>();
         answers.add(new Answer(answer1_score, answer1_text));
         answers.add(new Answer(answer2_score, answer2_text));
         answers.add(new Answer(answer3_score, answer3_text));
         answers.add(new Answer(answer4_score, answer4_text));
 
-        return new Question(text, answers, type);
+        return new Question(id, text, answers, type);
     }
 
     public Question getQuestionById(Integer id) {
@@ -139,6 +147,18 @@ public class ZooService {
 
         Log.e("Awareness SCORE", String.valueOf(awarenessScore));
         Log.e("Lifestyle SCORE", String.valueOf(lifestyleScore));
+    }
+
+    public void addAnsweredQuestionId(int questionId) {
+        answeredQuestions.add(questionId);
+    }
+
+    public boolean isQuestionAnswered(int questionId) {
+        return answeredQuestions.contains(questionId);
+    }
+
+    public HashSet<Integer> getAnsweredQuestions() {
+        return answeredQuestions;
     }
 
     public String getName() {

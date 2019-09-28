@@ -227,4 +227,8 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
             e.printStackTrace();
         }
     }
+
+    public NavController getNavController() {
+        return navController;
+    }
 }
