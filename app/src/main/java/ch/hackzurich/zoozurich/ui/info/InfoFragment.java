@@ -16,12 +16,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
+import ch.hackzurich.zoozurich.core.ZooService;
 import ch.hackzurich.zoozurich.ui.box.BoxFragment;
 
 public class InfoFragment extends Fragment implements View.OnClickListener {
 
     private InfoViewModel mViewModel;
+    private ZooService zooService;
 
     public static InfoFragment newInstance() {
         return new InfoFragment();
@@ -30,6 +33,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        zooService = ((MainActivity) getActivity()).getZooService();
         mViewModel = ViewModelProviders.of(this).get(InfoViewModel.class);
         View root = inflater.inflate(R.layout.info_fragment, container, false);
         final TextView textView = root.findViewById(R.id.info_fragment_text);
@@ -53,7 +57,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         boxFragment.onInfoDisplayed();
     }
 
-    public void setInfoById(int infoId) {
-        mViewModel.getText().setValue("TEST INFO REPLACE IT WITH TRUE ONE");
+    public void setInfoById(Integer infoId) {
+        mViewModel.getText().setValue(zooService.getInfoById(infoId).getText());
     }
 }

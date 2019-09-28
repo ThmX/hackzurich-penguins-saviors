@@ -112,7 +112,7 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
             // See API reference for complete list of supported types
             if (valueType == FirebaseVisionBarcode.TYPE_TEXT) {
                 String text = barcode.getRawValue();
-                boxFragment.initializeBox(1, 2, 1);
+                boxFragment.initializeBox(text);
                 Log.i("Zoo", "Text = " + text);
             } else if (valueType == FirebaseVisionBarcode.TYPE_URL) {
                 String title = barcode.getUrl().getTitle();
