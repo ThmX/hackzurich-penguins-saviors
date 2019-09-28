@@ -65,12 +65,12 @@ public class BoxFragment extends Fragment {
                 }
             }
         });
+        zooService = ((MainActivity) getActivity()).getZooService();
 
         return root;
     }
 
     public void initializeBox(String qrCodeId) {
-        ((GuideFragment) getParentFragment()).hideAR();
         int awarenessQuestionId;
         int lifestyleQuestionId;
         int infoId;
@@ -95,10 +95,13 @@ public class BoxFragment extends Fragment {
                 return;
         }
 
-        mViewModel.getAwarenessQuestionId().setValue(awarenessQuestionId);
-        mViewModel.getLifestyleQuestionId().setValue(lifestyleQuestionId);
-        mViewModel.getInfoId().setValue(infoId);
-        setQuestion(awarenessQuestionId);
+        if (!zooService.isQuestionAnswered(lifestyleQuestionId)) {
+            ((GuideFragment) getParentFragment()).hideAR();
+            mViewModel.getAwarenessQuestionId().setValue(awarenessQuestionId);
+            mViewModel.getLifestyleQuestionId().setValue(lifestyleQuestionId);
+            mViewModel.getInfoId().setValue(infoId);
+            setQuestion(awarenessQuestionId);
+        }
     }
 
     private void setQuestion(Integer questionId) {
@@ -112,23 +115,24 @@ public class BoxFragment extends Fragment {
     }
 
     public void onQuestionAnswered(int score, QuestionType type, int questionId) {
-        zooService = ((MainActivity) getActivity()).getZooService();
-        zooService.increaseScore(score, type);
-        zooService.addAnsweredQuestionId(questionId);
+        if (!zooService.isQuestionAnswered(questionId)) {
+            zooService.increaseScore(score, type);
+            zooService.addAnsweredQuestionId(questionId);
 
-        if(type == QuestionType.LIFESTYLE) {
-            questionFragment.getView().setVisibility(View.GONE);
-            infoFragment.getView().setVisibility(View.GONE);
+            if (type == QuestionType.LIFESTYLE) {
+                questionFragment.getView().setVisibility(View.GONE);
+                infoFragment.getView().setVisibility(View.GONE);
 
-            ((GuideFragment) getParentFragment()).showAR();
+                ((GuideFragment) getParentFragment()).showAR();
 
-            if (zooService.getAnsweredQuestions().size() == zooService.getQuestions().size()) {
-                // TODO That's really bad, refactor!
-                navController = ((GuideFragment) getParentFragment()).getNavController();
-                navController.navigate(R.id.navigation_summary);
+                if (zooService.getAnsweredQuestions().size() == zooService.getQuestions().size()) {
+                    // TODO That's really bad, refactor!
+                    navController = ((GuideFragment) getParentFragment()).getNavController();
+                    navController.navigate(R.id.navigation_summary);
+                }
+            } else {
+                setInfo(mViewModel.getInfoId().getValue());
             }
-        } else {
-            setInfo(mViewModel.getInfoId().getValue());
         }
     }
 
