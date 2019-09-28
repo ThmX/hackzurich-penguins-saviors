@@ -70,6 +70,7 @@ public class BoxFragment extends Fragment {
     }
 
     public void initializeBox(String qrCodeId) {
+        ((GuideFragment) getParentFragment()).hideAR();
         int awarenessQuestionId;
         int lifestyleQuestionId;
         int infoId;
@@ -118,6 +119,8 @@ public class BoxFragment extends Fragment {
         if(type == QuestionType.LIFESTYLE) {
             questionFragment.getView().setVisibility(View.GONE);
             infoFragment.getView().setVisibility(View.GONE);
+
+            ((GuideFragment) getParentFragment()).showAR();
 
             if (zooService.getAnsweredQuestions().size() == zooService.getQuestions().size()) {
                 // TODO That's really bad, refactor!

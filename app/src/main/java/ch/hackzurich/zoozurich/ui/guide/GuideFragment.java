@@ -109,6 +109,14 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         // TODO
     }
 
+    public void hideAR() {
+        getView().findViewById(R.id.ar_fragment).setVisibility(View.GONE);
+    }
+
+    public void showAR() {
+        getView().findViewById(R.id.ar_fragment).setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onSuccess(List<FirebaseVisionBarcode> barcodes) {
         for (FirebaseVisionBarcode barcode : barcodes) {

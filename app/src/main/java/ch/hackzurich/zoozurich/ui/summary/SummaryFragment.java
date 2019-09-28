@@ -9,14 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
-import ch.hackzurich.zoozurich.core.Answer;
-import ch.hackzurich.zoozurich.ui.questions.QuestionFragment;
 import ch.hackzurich.zoozurich.core.ZooService;
 
 public class SummaryFragment extends Fragment {
