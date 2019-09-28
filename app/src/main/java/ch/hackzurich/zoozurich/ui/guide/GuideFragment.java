@@ -172,7 +172,7 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
     private void onFrameUpdate(FrameTime frameTime) {
 
         delay += frameTime.getDeltaSeconds();
-        if (delay < 5) {
+        if (delay < 1) {
             return;
         }
         delay = 0;
