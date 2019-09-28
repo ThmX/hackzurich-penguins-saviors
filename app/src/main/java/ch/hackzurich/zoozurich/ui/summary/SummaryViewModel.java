@@ -6,14 +6,20 @@ import androidx.lifecycle.ViewModel;
 
 public class SummaryViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<Integer> awarenessScore;
+    private MutableLiveData<Integer> lifestyleScore;
 
-    public SummaryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+    public MutableLiveData<Integer> getAwarenessScore() {
+        if (awarenessScore == null) {
+            awarenessScore = new MutableLiveData<Integer>();
+        }
+        return awarenessScore;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<Integer> getLifestyleScore() {
+        if (lifestyleScore == null) {
+            lifestyleScore = new MutableLiveData<Integer>();
+        }
+        return lifestyleScore;
     }
 }

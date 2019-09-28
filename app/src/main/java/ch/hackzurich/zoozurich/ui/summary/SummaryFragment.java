@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.ZooService;
 
@@ -22,16 +24,26 @@ public class SummaryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        zooService = ((MainActivity) getActivity()).getZooService();
         summaryViewModel = ViewModelProviders.of(this).get(SummaryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_summary, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        summaryViewModel.getText().observe(this, new Observer<String>() {
+        final TextView awarenessScoreText = root.findViewById(R.id.awareness_score);
+        final TextView lifestyleScoreText = root.findViewById(R.id.lifestyle_score);
+        summaryViewModel.getAwarenessScore().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(@Nullable Integer s) {
+                awarenessScoreText.setText(String.valueOf(s));
             }
         });
+        summaryViewModel.getLifestyleScore().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer s) {
+                lifestyleScoreText.setText(String.valueOf(s));
+            }
+        });
+
+        summaryViewModel.getAwarenessScore().setValue(zooService.getAwarenessScore());
+        summaryViewModel.getLifestyleScore().setValue(zooService.getLifestyleScore());
 
         return root;
     }

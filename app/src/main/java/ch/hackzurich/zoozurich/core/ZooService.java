@@ -27,13 +27,13 @@ public class ZooService {
             1,
             "How long would you have to eat vegetarian to save as much CO2 as a flight from Zurich to New York produces?",
             QuestionType.AWARENESS,
-            " A) one year ",
+            "A) one year ",
             0,
-            " B) 6 months",
+            "B) 6 months",
             0,
-            "C)two and a half years",
+            "C) two and a half years",
             0,
-            " D) one year and 8 months",
+            "D) one year and 8 months",
             1
         ));
         questions.put(2, createQuestion(
@@ -53,14 +53,14 @@ public class ZooService {
             3,
             " How much plastic do big retail companies in switzerland save per year since plastic bags cost 5 rappen?",
             QuestionType.AWARENESS,
-            " A) 850t ",
+            "A) 850t ",
             1,
-            " B) 500t",
-            2,
-            "C)170t",
-            3,
-            " D) 90t",
-            4
+            "B) 500t",
+            0,
+            "C) 170t",
+            0,
+            "D) 90t",
+            0
         ));
         questions.put(4, createQuestion(
             4,
@@ -79,14 +79,14 @@ public class ZooService {
             5,
             "How many times a month does an average swiss person eat imported fish?",
             QuestionType.AWARENESS,
-            " A) 4 times per month ",
+            "A) 4 times per month ",
             1,
-            " B) 1 time per month",
-            2,
-            "C)8 times per month",
-            3,
-            " D) 3 times per month",
-            4
+            "B) 1 time per month",
+            0,
+            "C) 8 times per month",
+            0,
+            "D) 3 times per month",
+            0
         ));
         questions.put(6, createQuestion(
             6,
@@ -102,17 +102,11 @@ public class ZooService {
             4
         ));
 
-        infos.put(1, new Info("How long would you have to eat vegetarian to save as much CO2 as a flight from Zurich to New York produces?\n" +
-                "Right Answer: In deed, this is quite a long time, but with raising CO2 also the temperature raises. This also effects the ocean and fish will follow the cool water southwards. This means that our penguins have to travel farther from year to year to feed their chicks on the!\n" +
-                "False Answer: Actually, it is 1 year and 8 months. With raising CO2 also the temperature raises. This also effects the ocean and fish will follow the cool water southwards. This means that our penguins have to travel farther from year to year to feed their chicks on the islands!",
+        infos.put(1, new Info("It is 1 year and 8 months. With raising CO2 also the temperature raises. This also effects the ocean and fish will follow the cool water southwards. This means that our penguins have to travel farther from year to year to feed their chicks on the islands!",
                 R.mipmap.penguin_routes));
-        infos.put(3, new Info("How much plastic do big retail companies in switzerland save per year since plastic bags cost 5 rappen\n" +
-                "Right Answer: It is in fact 850t, isn’t that incredible? This means that there is less plastic ending up in the ocean and potentially being ingested by a penguin because it mistakes the plastic for his lunch.\n" +
-                "False Answer: It is actually 850t, isn’t that incredible? This means that there is less plastic ending up in the ocean and potentially being ingested by a penguin because it mistakes the plastic for his lunch.",
+        infos.put(3, new Info("It is in fact 850t, isn't that incredible? This means that there is less plastic ending up in the ocean and potentially being ingested by a penguin because it mistakes the plastic for his lunch",
                 R.mipmap.garbage));
-        infos.put(5, new Info("How many times a month does an average swiss person eat imported fish\n" +
-                "Right Answer: Very True, it is 160g per week! Did you know that penguins eat approximately 600 times more fish than us human?\n" +
-                "False Answer: Actually it is 160g per week, which corresponds to one fish filet. Did you know that penguins, if they were our size, would eat approximately 600 times more fish than us human?",
+        infos.put(5, new Info("It is 160g per week, which corresponds to one fish filet. Did you know that penguins, if they were our size, would eat approximately 600 times more fish than us human?",
                 R.mipmap.fish_consumption));
     }
 
@@ -155,6 +149,14 @@ public class ZooService {
 
     public boolean isQuestionAnswered(int questionId) {
         return answeredQuestions.contains(questionId);
+    }
+
+    public int getAwarenessScore() {
+        return awarenessScore;
+    }
+
+    public int getLifestyleScore() {
+        return lifestyleScore;
     }
 
     public HashSet<Integer> getAnsweredQuestions() {
