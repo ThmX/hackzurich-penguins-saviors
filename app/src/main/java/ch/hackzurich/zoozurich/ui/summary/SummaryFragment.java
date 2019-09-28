@@ -42,11 +42,7 @@ public class SummaryFragment extends Fragment {
 
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Answer answer_1 = new Answer(1, "answer1");
-        Answer answer_2 = new Answer(2, "answer2");
-        Answer answer_3 = new Answer(3, "answer3");
-        Answer answer_4 = new Answer(4, "answer4");
-        fragmentTransaction.replace(R.id.question_placeholder, QuestionFragment.newInstance("Question", answer_1, answer_2, answer_3, answer_4));
+        fragmentTransaction.replace(R.id.question_placeholder, QuestionFragment.newInstance(zooService.getLifestyleQuestions().get(0)));
         fragmentTransaction.commit();
 
         return root;

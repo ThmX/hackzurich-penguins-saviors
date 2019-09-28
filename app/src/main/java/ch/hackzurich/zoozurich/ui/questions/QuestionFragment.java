@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.Answer;
+import ch.hackzurich.zoozurich.core.Question;
+import ch.hackzurich.zoozurich.core.QuestionType;
 
 /**
  * A fragment with a Google +1 button.
@@ -30,16 +32,7 @@ import ch.hackzurich.zoozurich.core.Answer;
 public class QuestionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String QUESTION = "question";
-    // TODO: Maybe pass answers object here
-    private static final String ANSWERS_1 = "answers_1";
-    private static final String ANSWERS_2 = "answers_2";
-    private static final String ANSWERS_3 = "answers_3";
-    private static final String ANSWERS_4 = "answers_4";
-    private String question;
-    private Answer answers_1;
-    private Answer answers_2;
-    private Answer answers_3;
-    private Answer answers_4;
+    private Question question;
     private QuestionViewModel questionViewModel;
 
     private OnFragmentInteractionListener mListener;
@@ -48,15 +41,10 @@ public class QuestionFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    public static QuestionFragment newInstance(String question, Answer answers_1, Answer answers_2, Answer answers_3, Answer answers_4) {
+    public static QuestionFragment newInstance(Question question) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(QUESTION, question);
-        args.putSerializable(ANSWERS_1, answers_1);
-        args.putSerializable(ANSWERS_2, answers_2);
-        args.putSerializable(ANSWERS_3, answers_3);
-        args.putSerializable(ANSWERS_4, answers_4);
+        args.putSerializable(QUESTION, question);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,11 +53,7 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            question = getArguments().getString(QUESTION);
-            answers_1 = (Answer) getArguments().getSerializable(ANSWERS_1);
-            answers_2 = (Answer) getArguments().getSerializable(ANSWERS_2);
-            answers_3 = (Answer) getArguments().getSerializable(ANSWERS_3);
-            answers_4 = (Answer) getArguments().getSerializable(ANSWERS_4);
+            question = (Question) getArguments().getSerializable(QUESTION);
         }
     }
 
@@ -80,7 +64,6 @@ public class QuestionFragment extends Fragment {
                 ViewModelProviders.of(this).get(QuestionViewModel.class);
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_question, container, false);
-        final Button button = root.findViewById(R.id.submit_button);
         final TextView questionText = root.findViewById(R.id.question_text);
         final TextView answer_1 = root.findViewById(R.id.answer_1);
         final TextView answer_2 = root.findViewById(R.id.answer_2);
@@ -97,10 +80,8 @@ public class QuestionFragment extends Fragment {
 
         questionViewModel.getAnswer().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(@Nullable Integer score) {
-                if(!button.isEnabled()) {
-                    button.setEnabled(true);
-                }
+            public void onChanged(Integer radioId) {
+                onQuestionAnswered(radioId);
             }
         });
         answers.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
@@ -111,46 +92,36 @@ public class QuestionFragment extends Fragment {
         });
 
         // Set initial values
-        questionViewModel.getQuestion().setValue(question);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onQuestionAnswered(v);
-            }
-        });
-        button.setEnabled(false);
+        questionViewModel.getQuestion().setValue(question.getText());
 
-        answer_1.setText(answers_1.getText());
-        answer_2.setText(answers_2.getText());
-        answer_3.setText(answers_3.getText());
-        answer_4.setText(answers_4.getText());
+        answer_1.setText(question.getAnswers().get(0).getText());
+        answer_2.setText(question.getAnswers().get(1).getText());
+        answer_3.setText(question.getAnswers().get(2).getText());
+        answer_4.setText(question.getAnswers().get(3).getText());
         return root;
     }
 
-    public void onQuestionAnswered(View v) {
-        questionViewModel =
-                ViewModelProviders.of(this).get(QuestionViewModel.class);
-
-        @Nullable int radioId = questionViewModel.getAnswer().getValue();
+    private void onQuestionAnswered(int radioId) {
 
         int score = -1;
 
         switch(radioId) {
             case R.id.answer_1:
-                score = answers_1.getScore();
+                score = question.getAnswers().get(0).getScore();
                 break;
             case R.id.answer_2:
-                score = answers_2.getScore();
+                score = question.getAnswers().get(1).getScore();
                 break;
             case R.id.answer_3:
-                score = answers_3.getScore();
+                score = question.getAnswers().get(2).getScore();
                 break;
             case R.id.answer_4:
-                score = answers_4.getScore();
+                score = question.getAnswers().get(3).getScore();
                 break;
         }
 
         if (mListener != null) {
-            mListener.onQuestionAnswered(score);
+            mListener.onQuestionAnswered(score, question.getType());
         }
     }
 
@@ -182,7 +153,7 @@ public class QuestionFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onQuestionAnswered(int score);
+        void onQuestionAnswered(int score, QuestionType type);
     }
 
 }
