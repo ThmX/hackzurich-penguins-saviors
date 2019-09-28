@@ -9,9 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import ch.hackzurich.zoozurich.R;
+import ch.hackzurich.zoozurich.ui.questions.QuestionFragment;
 
 public class DashboardFragment extends Fragment {
 
@@ -29,6 +32,12 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.question_placeholder, QuestionFragment.newInstance("Question", "answer1", "answer2", "answer3", "answe4"));
+        fragmentTransaction.commit();
+
         return root;
     }
 }
