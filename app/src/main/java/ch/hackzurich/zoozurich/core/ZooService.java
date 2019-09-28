@@ -6,6 +6,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ch.hackzurich.zoozurich.R;
+
 public class ZooService {
     private String name;
     private String specie;
@@ -95,13 +97,15 @@ public class ZooService {
         infos.put(1, new Info("How long would you have to eat vegetarian to save as much CO2 as a flight from Zurich to New York produces?\n" +
                 "Right Answer: In deed, this is quite a long time, but with raising CO2 also the temperature raises. This also effects the ocean and fish will follow the cool water southwards. This means that our penguins have to travel farther from year to year to feed their chicks on the!\n" +
                 "False Answer: Actually, it is 1 year and 8 months. With raising CO2 also the temperature raises. This also effects the ocean and fish will follow the cool water southwards. This means that our penguins have to travel farther from year to year to feed their chicks on the islands!",
-                "file.png"));
+                R.mipmap.penguin_routes));
         infos.put(3, new Info("How much plastic do big retail companies in switzerland save per year since plastic bags cost 5 rappen\n" +
                 "Right Answer: It is in fact 850t, isn’t that incredible? This means that there is less plastic ending up in the ocean and potentially being ingested by a penguin because it mistakes the plastic for his lunch.\n" +
-                "False Answer: It is actually 850t, isn’t that incredible? This means that there is less plastic ending up in the ocean and potentially being ingested by a penguin because it mistakes the plastic for his lunch.", "file.png"));
+                "False Answer: It is actually 850t, isn’t that incredible? This means that there is less plastic ending up in the ocean and potentially being ingested by a penguin because it mistakes the plastic for his lunch.",
+                R.mipmap.garbage));
         infos.put(5, new Info("How many times a month does an average swiss person eat imported fish\n" +
                 "Right Answer: Very True, it is 160g per week! Did you know that penguins eat approximately 600 times more fish than us human?\n" +
-                "False Answer: Actually it is 160g per week, which corresponds to one fish filet. Did you know that penguins, if they were our size, would eat approximately 600 times more fish than us human?", "file.png"));
+                "False Answer: Actually it is 160g per week, which corresponds to one fish filet. Did you know that penguins, if they were our size, would eat approximately 600 times more fish than us human?",
+                R.mipmap.fish_consumption));
     }
 
     private Question createQuestion(String text, QuestionType type, String answer1_text, int answer1_score, String answer2_text, int answer2_score, String answer3_text, int answer3_score, String answer4_text, int answer4_score) {

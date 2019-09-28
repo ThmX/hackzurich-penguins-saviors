@@ -3,7 +3,6 @@ package ch.hackzurich.zoozurich.ui.info;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
+import ch.hackzurich.zoozurich.core.Info;
 import ch.hackzurich.zoozurich.core.ZooService;
 import ch.hackzurich.zoozurich.ui.box.BoxFragment;
 
@@ -44,6 +45,8 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
             }
         });
         Button nextButton = root.findViewById(R.id.info_next_button);
+        ImageView imageView = root.findViewById(R.id.info_image);
+        imageView.setVisibility(View.GONE);
 
         nextButton.setOnClickListener(this);
 
@@ -58,6 +61,10 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setInfoById(Integer infoId) {
-        mViewModel.getText().setValue(zooService.getInfoById(infoId).getText());
+        Info info = zooService.getInfoById(infoId);
+        mViewModel.getText().setValue(info.getText());
+        ImageView imageView = getView().findViewById(R.id.info_image);
+        imageView.setImageResource(info.getImageResourceId());
+        imageView.setVisibility(View.VISIBLE);
     }
 }

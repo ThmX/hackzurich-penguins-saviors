@@ -3,18 +3,18 @@ package ch.hackzurich.zoozurich.core;
 
 public class Info {
     private String text;
-    private String filename;
+    private int imageResourceId;
 
-    public Info(String _text, String _filename) {
+    public Info(String _text, int _imageResourceId) {
         text = _text;
-        filename = _filename;
+        imageResourceId = _imageResourceId;
     }
 
     public String getText() {
         return text;
     }
 
-    public String getFilename() {
-        return filename;
+    public int getImageResourceId() {
+        return imageResourceId;
     }
 }
