@@ -25,7 +25,7 @@ enum BoxViewEnum {
     INFO
 }
 
-public class BoxFragment extends Fragment implements QuestionFragment.OnFragmentInteractionListener {
+public class BoxFragment extends Fragment {
 
     private BoxViewModel mViewModel;
 
@@ -35,7 +35,6 @@ public class BoxFragment extends Fragment implements QuestionFragment.OnFragment
 
     private InfoFragment infoFragment;
     private QuestionFragment questionFragment;
-    private BoxViewModel boxViewModel;
     private ZooService zooService;
 
     @Override
@@ -85,10 +84,16 @@ public class BoxFragment extends Fragment implements QuestionFragment.OnFragment
     public void onQuestionAnswered(int score, QuestionType type) {
         zooService = ((MainActivity) getActivity()).getZooService();
         zooService.increaseScore(score, type);
-        setInfo(mViewModel.getInfoId().getValue());
+
+        if(type == QuestionType.LIFESTYLE) {
+            questionFragment.getView().setVisibility(View.GONE);
+            infoFragment.getView().setVisibility(View.GONE);
+        } else {
+            setInfo(mViewModel.getInfoId().getValue());
+        }
     }
 
     public void onInfoDisplayed() {
-
+        setQuestion(mViewModel.getLifestyleQuestionId().getValue());
     }
 }

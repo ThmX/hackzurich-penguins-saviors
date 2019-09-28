@@ -3,6 +3,7 @@ package ch.hackzurich.zoozurich.ui.info;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import ch.hackzurich.zoozurich.R;
+import ch.hackzurich.zoozurich.ui.box.BoxFragment;
 
-public class InfoFragment extends Fragment {
+public class InfoFragment extends Fragment implements View.OnClickListener {
 
     private InfoViewModel mViewModel;
 
@@ -36,10 +39,21 @@ public class InfoFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        Button nextButton = root.findViewById(R.id.info_next_button);
+
+        nextButton.setOnClickListener(this);
+
         return root;
     }
 
-    public void setInfoText(String text) {
-        mViewModel.getText().setValue(text);
+    @Override
+    public void onClick(View v)
+    {
+        BoxFragment boxFragment = (BoxFragment) getParentFragment();
+        boxFragment.onInfoDisplayed();
+    }
+
+    public void setInfoById(int infoId) {
+        mViewModel.getText().setValue("TEST INFO REPLACE IT WITH TRUE ONE");
     }
 }

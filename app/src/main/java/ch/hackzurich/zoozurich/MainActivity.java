@@ -4,11 +4,9 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import ch.hackzurich.zoozurich.core.QuestionType;
 import ch.hackzurich.zoozurich.core.ZooService;
 
 import ch.hackzurich.zoozurich.models.ModelService;
-import ch.hackzurich.zoozurich.ui.questions.QuestionFragment;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -24,22 +24,14 @@ import ch.hackzurich.zoozurich.core.Answer;
 import ch.hackzurich.zoozurich.core.Question;
 import ch.hackzurich.zoozurich.core.QuestionType;
 import ch.hackzurich.zoozurich.core.ZooService;
+import ch.hackzurich.zoozurich.ui.box.BoxFragment;
 
-/**
- * A fragment with a Google +1 button.
- * Activities that contain this fragment must implement the
- * {@link QuestionFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link QuestionFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class QuestionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String QUESTION = "question";
     private Question question;
     private QuestionViewModel questionViewModel;
-
-    private OnFragmentInteractionListener mListener;
 
     public QuestionFragment() {
         // Required empty public constructor
@@ -107,9 +99,13 @@ public class QuestionFragment extends Fragment {
     }
 
     public void setQuestionById(int id) {
+        final RadioGroup radioGroup = getView().findViewById(R.id.question_answers);
+        radioGroup.clearCheck();
+
         ZooService zooService = ((MainActivity) getActivity()).getZooService();
         question = zooService.getQuestionById(id);
         ArrayList<Answer> answers = question.getAnswers();
+
         // Set initial values
         questionViewModel.getQuestion().setValue(question.getText());
         questionViewModel.getAnswer1Text().setValue(answers.get(0).getText());
@@ -137,40 +133,7 @@ public class QuestionFragment extends Fragment {
                 break;
         }
 
-        if (mListener != null) {
-            mListener.onQuestionAnswered(score, question.getType());
-        }
+        BoxFragment boxFragment = (BoxFragment) getParentFragment();
+        boxFragment.onQuestionAnswered(score, question.getType());
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement onQuestionAnsweredListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        void onQuestionAnswered(int score, QuestionType type);
-    }
-
 }

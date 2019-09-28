@@ -15,7 +15,7 @@ public class ZooService {
 
         questions.put(1, createQuestion(
                 "Question text",
-                QuestionType.LIFESTYLE,
+                QuestionType.AWARENESS,
                 "answer1",
                 1,
                 "answer2",
