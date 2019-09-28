@@ -91,18 +91,16 @@ public class QuestionFragment extends Fragment {
         answers.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
-                questionViewModel.getUserAnswer().setValue(checkedId);
+                if(checkedId != -1) {
+                    questionViewModel.getUserAnswer().setValue(checkedId);
+                }
             }
         });
 
         return root;
     }
 
-    public void setQuestionById(int id) {
-        // TODO Clean the form somewhere
-        // final RadioGroup radioGroup = getView().findViewById(R.id.question_answers);
-        // radioGroup.clearCheck();
-
+    public void setQuestionById(Integer id) {
         ZooService zooService = ((MainActivity) getActivity()).getZooService();
         question = zooService.getQuestionById(id);
         ArrayList<Answer> answers = question.getAnswers();
@@ -136,5 +134,7 @@ public class QuestionFragment extends Fragment {
 
         BoxFragment boxFragment = (BoxFragment) getParentFragment();
         boxFragment.onQuestionAnswered(score, question.getType());
+        final RadioGroup radioGroup = getView().findViewById(R.id.question_answers);
+        radioGroup.clearCheck();
     }
 }

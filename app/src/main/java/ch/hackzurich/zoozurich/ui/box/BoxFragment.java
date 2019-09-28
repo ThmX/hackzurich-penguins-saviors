@@ -64,19 +64,43 @@ public class BoxFragment extends Fragment {
         return root;
     }
 
-    public void initializeBox(int awarenessQuestionId, int lifestyleQuestionId, int infoId) {
+    public void initializeBox(String qrCodeId) {
+        int awarenessQuestionId;
+        int lifestyleQuestionId;
+        int infoId;
+
+        switch (qrCodeId) {
+            case "Adelie":
+                awarenessQuestionId = 1;
+                lifestyleQuestionId = 2;
+                infoId = 1;
+                break;
+            case "Emperor":
+                awarenessQuestionId = 3;
+                lifestyleQuestionId = 4;
+                infoId = 3;
+                break;
+            case "Gentoo":
+                awarenessQuestionId = 5;
+                lifestyleQuestionId = 6;
+                infoId = 5;
+                break;
+            default:
+                return;
+        }
+
         mViewModel.getAwarenessQuestionId().setValue(awarenessQuestionId);
         mViewModel.getLifestyleQuestionId().setValue(lifestyleQuestionId);
         mViewModel.getInfoId().setValue(infoId);
         setQuestion(awarenessQuestionId);
     }
 
-    private void setQuestion(int questionId) {
+    private void setQuestion(Integer questionId) {
         questionFragment.setQuestionById(questionId);
         mViewModel.getCurrentView().setValue(BoxViewEnum.QUESTION);
     }
 
-    private void setInfo(int infoId) {
+    private void setInfo(Integer infoId) {
         infoFragment.setInfoById(infoId);
         mViewModel.getCurrentView().setValue(BoxViewEnum.INFO);
     }

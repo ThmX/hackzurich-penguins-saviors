@@ -25,9 +25,6 @@ import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
-import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
@@ -45,6 +42,7 @@ import androidx.navigation.NavController;
 import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.ZooService;
+import ch.hackzurich.zoozurich.models.ModelLoader;
 import ch.hackzurich.zoozurich.models.ModelService;
 import ch.hackzurich.zoozurich.ui.box.BoxFragment;
 
@@ -112,7 +110,7 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
             // See API reference for complete list of supported types
             if (valueType == FirebaseVisionBarcode.TYPE_TEXT) {
                 String text = barcode.getRawValue();
-                boxFragment.initializeBox(1, 2, 1);
+                boxFragment.initializeBox(text);
                 Log.i("Zoo", "Text = " + text);
             } else if (valueType == FirebaseVisionBarcode.TYPE_URL) {
                 String title = barcode.getUrl().getTitle();
@@ -130,6 +128,19 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         Log.e("Zoo", "QRCode", e);
     }
 
+    private ModelLoader getModelLoader() {
+        switch (zooService.getSpecie()) {
+            case "Cute":
+                return modelService.getCutePenguin();
+
+            case "King":
+                return modelService.getKingPenguin();
+        }
+
+        // FIXME That is very very much ugly
+        return null;
+    }
+
     private void onPlaneTap(HitResult hitResult, Plane unusedPlane, MotionEvent unusedMotionEvent) {
         Log.i("Zoo", "onPlaneTap");
         if (!modelService.isLoaded()) {
@@ -139,7 +150,8 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         Anchor anchor = hitResult.createAnchor();
         AnchorNode anchorNode = new AnchorNode(anchor);
         anchorNode.setParent(arFragment.getArSceneView().getScene());
-        modelService.getKingPenguin().setParent(anchorNode);
+
+        getModelLoader().setParent(anchorNode);
 
         Log.i("Zoo", "Displayed");
 
@@ -192,5 +204,16 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         detector.detectInImage(fbImage)
                 .addOnSuccessListener(this)
                 .addOnFailureListener(this);
+    }
+
+    private void saveImage() {
+        Frame frame = arFragment.getArSceneView().getArFrame();
+        try {
+            Image image = frame.acquireCameraImage();
+
+
+        } catch (NotYetAvailableException e) {
+            e.printStackTrace();
+        }
     }
 }
