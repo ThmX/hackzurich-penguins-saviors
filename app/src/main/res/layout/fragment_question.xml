@@ -8,6 +8,17 @@
 
 
     <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4fa5d5"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Category"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp" />
+
+    <TextView
         android:id="@+id/question_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,13 +28,13 @@
         android:textSize="25dp"
         android:textAlignment="center"
         android:padding="30dp"
+        android:background="@drawable/back"
         tools:text="How long would you have to eat vegetarian to save as much CO2 as a flight from Zurich to New York produces?" />
 
     <RadioGroup
         android:id="@+id/question_answers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
         android:layout_weight="1">
 
         <RadioButton
@@ -35,6 +46,7 @@
             tools:text="2 Jahre"
             android:textSize="20dp"
             android:paddingLeft="10dp"
+            android:background="@drawable/back"
             android:checked="false" />
 
         <RadioButton
@@ -46,6 +58,7 @@
             tools:text="1,8 Jahre"
             android:textSize="20dp"
             android:paddingLeft="10dp"
+            android:background="@drawable/back"
             android:checked="false" />
 
         <RadioButton
@@ -57,6 +70,7 @@
             tools:text="5 Jahre"
             android:textSize="20dp"
             android:paddingLeft="10dp"
+            android:background="@drawable/back"
             android:checked="false" />
 
         <RadioButton
@@ -67,6 +81,7 @@
             android:layout_weight="1"
             tools:text="100 Jahre"
             android:textSize="20dp"
+            android:background="@drawable/back"
             android:paddingLeft="10dp"
             android:checked="false" />
     </RadioGroup>
