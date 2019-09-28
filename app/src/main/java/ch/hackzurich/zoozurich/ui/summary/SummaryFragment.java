@@ -1,4 +1,4 @@
-package ch.hackzurich.zoozurich.ui.home;
+package ch.hackzurich.zoozurich.ui.summary;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,19 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
+import ch.hackzurich.zoozurich.core.ZooService;
 
-public class HomeFragment extends Fragment {
+public class SummaryFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private ZooService zooService;
+
+    private SummaryViewModel summaryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+
+        zooService = ((MainActivity) getActivity()).getZooService();
+
+        summaryViewModel = ViewModelProviders.of(this).get(SummaryViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        final TextView textView = root.findViewById(R.id.text_dashboard);
+        summaryViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
