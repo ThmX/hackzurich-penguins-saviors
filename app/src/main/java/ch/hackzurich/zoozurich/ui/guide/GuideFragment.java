@@ -20,6 +20,7 @@ import androidx.navigation.NavController;
 import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.ZooService;
+import ch.hackzurich.zoozurich.ui.box.BoxFragment;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -31,6 +32,8 @@ public class GuideFragment extends Fragment {
 
     private ArFragment arFragment;
 
+    private BoxFragment boxFragment;
+
     private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,6 +44,7 @@ public class GuideFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_guide, container, false);
 
         arFragment = (ArFragment) getChildFragmentManager().findFragmentById(R.id.ar_fragment);
+        boxFragment = (BoxFragment) getChildFragmentManager().findFragmentById(R.id.box_fragment);
 
         navController = findNavController(container);
 
@@ -52,8 +56,9 @@ public class GuideFragment extends Fragment {
 
     private void onPlaneTap(HitResult hitResult, Plane unusedPlane, MotionEvent unusedMotionEvent) {
         Log.i("Zoo", "onPlaneTap");
-        navController.navigate(R.id.navigation_summary);
+//        navController.navigate(R.id.navigation_summary);
         // TODO
+        boxFragment.initializeBox(1, 2, 1);
     }
 
     private void onFrameUpdate(FrameTime unusedframeTime) {
