@@ -38,7 +38,7 @@ public class GuideFragment extends Fragment {
         zooService = ((MainActivity) getActivity()).getZooService();
 
         guideViewModel = ViewModelProviders.of(this).get(GuideViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        View root = inflater.inflate(R.layout.fragment_guide, container, false);
 
         arFragment = (ArFragment) getChildFragmentManager().findFragmentById(R.id.ar_fragment);
 

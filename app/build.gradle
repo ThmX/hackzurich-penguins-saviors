@@ -36,12 +36,16 @@ dependencies {
     implementation "com.google.ar.sceneform.ux:sceneform-ux:1.11.0"
     implementation "com.google.ar.sceneform:animation:1.11.0"
 
+    // MLKit
+    implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
+apply plugin: 'com.google.gms.google-services'
 
 sceneform.asset('sampledata/models/andy_dance.fbx',
         'default',
