@@ -1,11 +1,14 @@
 package ch.hackzurich.zoozurich;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import ch.hackzurich.zoozurich.core.ZooService;
 
-public class MainActivity extends AppCompatActivity {
+import ch.hackzurich.zoozurich.ui.questions.QuestionFragment;
+
+public class MainActivity extends AppCompatActivity implements QuestionFragment.OnFragmentInteractionListener {
 
     private ZooService zooService;
 
@@ -15,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         zooService = new ZooService();
+    }
+
+    public void onQuestionAnswered(int score) {
+        Log.e("TAGGG", String.valueOf(score));
     }
 
     public ZooService getZooService() {
