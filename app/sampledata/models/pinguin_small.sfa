@@ -1,0 +1,118 @@
+{
+  animations: [
+    {
+      clips: [
+        {
+          name: 'Scene',
+        },
+      ],
+      path: 'sampledata/models/pinguin_small.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'Pinguin',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'Pinguin2',
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+    {
+      name: 'Sharf',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: 'Sharf',
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'Color',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/models/pinguin_small.fbx',
+    name: 'pinguin_small',
+    recenter: 'root',
+    scale: 0.41131200000000001,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/pinguin_small.fbm/Sharf.jpg',
+      name: 'Sharf',
+      pipeline_name: 'pinguin_small.fbm/Sharf.jpg',
+    },
+    {
+      file: 'sampledata/models/pinguin_small.fbm/Pinguin2.jpg',
+      name: 'Pinguin2',
+      pipeline_name: 'pinguin_small.fbm/Pinguin2.jpg',
+    },
+  ],
+  version: '0.54:2',
+}

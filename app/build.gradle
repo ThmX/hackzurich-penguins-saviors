@@ -52,3 +52,13 @@ sceneform.asset('sampledata/models/andy_dance.fbx',
         'sampledata/models/andy_dance.sfa',
         'src/main/res/raw/andy_dance',
         ['sampledata/models/andy_wave_r.fbx', 'sampledata/models/andy_wave_l.fbx'])
+
+sceneform.asset('sampledata/models/penguin_v1_diffuse.obj',
+        'default',
+        'sampledata/models/penguin_v1_diffuse.sfa',
+        'src/main/res/raw/penguin_v1_diffuse')
+
+sceneform.asset('sampledata/models/pinguin_small.fbx',
+        'default',
+        'sampledata/models/pinguin_small.sfa',
+        'src/main/res/raw/pinguin_small')

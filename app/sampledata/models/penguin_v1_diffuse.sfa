@@ -1,0 +1,53 @@
+{
+  materials: [
+    {
+      name: '01___Default',
+      parameters: [
+        {
+          baseColor: 'penguin_v1_diffuse',
+        },
+        {
+          baseColorTint: [
+            0.58819999999999995,
+            0.58819999999999995,
+            0.58819999999999995,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.408248,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/models/penguin_v1_diffuse.obj',
+    name: 'penguin_v1_diffuse',
+    recenter: 'root',
+    scale: 0.023068000000000002,
+  },
+  samplers: [
+    {
+      file: 'sampledata/models/penguin_v1_diffuse.jpg',
+      name: 'penguin_v1_diffuse',
+      params: {
+        usage_type: 'Data',
+      },
+      pipeline_name: 'penguin_v1_diffuse.jpg',
+    },
+  ],
+  version: '0.54:2',
+}

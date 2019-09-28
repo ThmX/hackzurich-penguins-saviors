@@ -1,5 +1,8 @@
 package ch.hackzurich.zoozurich.ui.guide;
 
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,40 +10,83 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.ar.core.Anchor;
+import com.google.ar.core.Config;
+import com.google.ar.core.Frame;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
+import com.google.ar.core.Session;
+import com.google.ar.core.exceptions.NotYetAvailableException;
+import com.google.ar.core.exceptions.UnavailableApkTooOldException;
+import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
+import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
+import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
+import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
+import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.ux.ArFragment;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
+import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
+import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import androidx.navigation.NavController;
 import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.ZooService;
+import ch.hackzurich.zoozurich.models.ModelService;
 
 import static androidx.navigation.Navigation.findNavController;
 
-public class GuideFragment extends Fragment {
+public class GuideFragment extends Fragment implements OnSuccessListener<List<FirebaseVisionBarcode>>, OnFailureListener {
 
     private ZooService zooService;
 
-    private GuideViewModel guideViewModel;
+    private ModelService modelService;
 
     private ArFragment arFragment;
 
     private NavController navController;
 
+    private float delay = 0;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        zooService = ((MainActivity) getActivity()).getZooService();
 
-        guideViewModel = ViewModelProviders.of(this).get(GuideViewModel.class);
+        zooService = ((MainActivity) getActivity()).getZooService();
+        modelService = ((MainActivity) getActivity()).getModelService();
+
         View root = inflater.inflate(R.layout.fragment_guide, container, false);
 
         arFragment = (ArFragment) getChildFragmentManager().findFragmentById(R.id.ar_fragment);
+
+        try {
+            Session session = new Session(getContext());
+            Config config = new Config(session);
+            config.setFocusMode(Config.FocusMode.AUTO);
+            config.setUpdateMode(Config.UpdateMode.LATEST_CAMERA_IMAGE);
+            session.configure(config);
+            arFragment.getArSceneView().setupSession(session);
+        } catch (UnavailableArcoreNotInstalledException e) {
+            e.printStackTrace();
+        } catch (UnavailableApkTooOldException e) {
+            e.printStackTrace();
+        } catch (UnavailableSdkTooOldException e) {
+            e.printStackTrace();
+        } catch (UnavailableDeviceNotCompatibleException e) {
+            e.printStackTrace();
+        }
 
         navController = findNavController(container);
 
@@ -50,13 +96,96 @@ public class GuideFragment extends Fragment {
         return root;
     }
 
-    private void onPlaneTap(HitResult hitResult, Plane unusedPlane, MotionEvent unusedMotionEvent) {
-        Log.i("Zoo", "onPlaneTap");
-        navController.navigate(R.id.navigation_summary);
-        // TODO
+    @Override
+    public void onSuccess(List<FirebaseVisionBarcode> barcodes) {
+        for (FirebaseVisionBarcode barcode : barcodes) {
+            Rect bounds = barcode.getBoundingBox();
+            Point[] corners = barcode.getCornerPoints();
+
+            String rawValue = barcode.getRawValue();
+
+            int valueType = barcode.getValueType();
+            // See API reference for complete list of supported types
+            if (valueType == FirebaseVisionBarcode.TYPE_TEXT) {
+                String text = barcode.getRawValue();
+                Log.i("Zoo", "Text = " + text);
+            } else if (valueType == FirebaseVisionBarcode.TYPE_URL) {
+                String title = barcode.getUrl().getTitle();
+                String url = barcode.getUrl().getUrl();
+                Log.i("Zoo", "URL = " + title + " with " + url);
+
+            } else {
+                Log.w("Zoo", "QRCode of type " + valueType + " not supported");
+            }
+        }
     }
 
-    private void onFrameUpdate(FrameTime unusedframeTime) {
-        // TODO
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        Log.e("Zoo", "QRCode", e);
+    }
+
+    private void onPlaneTap(HitResult hitResult, Plane unusedPlane, MotionEvent unusedMotionEvent) {
+        Log.i("Zoo", "onPlaneTap");
+        if (!modelService.isLoaded()) {
+            return;
+        }
+
+        Anchor anchor = hitResult.createAnchor();
+        AnchorNode anchorNode = new AnchorNode(anchor);
+        anchorNode.setParent(arFragment.getArSceneView().getScene());
+        modelService.getKingPenguin().setParent(anchorNode);
+
+        Log.i("Zoo", "Displayed");
+
+        // navController.navigate(R.id.navigation_summary);
+    }
+
+    private void onFrameUpdate(FrameTime frameTime) {
+
+        delay += frameTime.getDeltaSeconds();
+        if (delay < 5) {
+            return;
+        }
+        delay = 0;
+
+        Log.i("Zoo", "onFrameUpdate");
+        Image image = null;
+        try {
+            Frame frame = arFragment.getArSceneView().getArFrame();
+            image = frame.acquireCameraImage();
+            searchQrCode(image);
+
+        } catch (NotYetAvailableException e) {
+            // TODO Do something?
+            e.printStackTrace();
+        } finally {
+            if (image != null) {
+                image.close();
+            }
+        }
+    }
+
+    private void searchQrCode(Image image) {
+        if (image == null) {
+            return;
+        }
+
+        FirebaseVisionBarcodeDetectorOptions options = new FirebaseVisionBarcodeDetectorOptions
+                .Builder()
+                .setBarcodeFormats(
+                        FirebaseVisionBarcode.FORMAT_QR_CODE,
+                        FirebaseVisionBarcode.FORMAT_AZTEC)
+                .build();
+
+        FirebaseVisionBarcodeDetector detector = FirebaseVision.getInstance()
+                .getVisionBarcodeDetector(options);
+
+        FirebaseVisionImage fbImage = FirebaseVisionImage.fromMediaImage(image,
+                FirebaseVisionImageMetadata.ROTATION_0);
+
+        detector.detectInImage(fbImage)
+                .addOnSuccessListener(this)
+                .addOnFailureListener(this);
     }
 }
