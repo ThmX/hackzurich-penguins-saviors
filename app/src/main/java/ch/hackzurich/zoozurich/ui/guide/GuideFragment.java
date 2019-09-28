@@ -46,6 +46,7 @@ import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.ZooService;
 import ch.hackzurich.zoozurich.models.ModelService;
+import ch.hackzurich.zoozurich.ui.box.BoxFragment;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -56,6 +57,8 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
     private ModelService modelService;
 
     private ArFragment arFragment;
+
+    private BoxFragment boxFragment;
 
     private NavController navController;
 
@@ -70,6 +73,7 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         View root = inflater.inflate(R.layout.fragment_guide, container, false);
 
         arFragment = (ArFragment) getChildFragmentManager().findFragmentById(R.id.ar_fragment);
+        boxFragment = (BoxFragment) getChildFragmentManager().findFragmentById(R.id.box_fragment);
 
         try {
             Session session = new Session(getContext());
@@ -108,6 +112,7 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
             // See API reference for complete list of supported types
             if (valueType == FirebaseVisionBarcode.TYPE_TEXT) {
                 String text = barcode.getRawValue();
+                boxFragment.initializeBox(1, 2, 1);
                 Log.i("Zoo", "Text = " + text);
             } else if (valueType == FirebaseVisionBarcode.TYPE_URL) {
                 String title = barcode.getUrl().getTitle();

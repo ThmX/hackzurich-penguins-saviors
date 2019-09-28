@@ -3,19 +3,17 @@ package ch.hackzurich.zoozurich.core;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ZooService {
-    private ArrayList<Question> lifestyleQuestions;
-    private ArrayList<Question> awarenessQuestions;
+    private HashMap<Integer, Question> questions;
     private int awarenessScore = 0;
     private int lifestyleScore = 0;
 
     public ZooService () {
-        lifestyleQuestions = new ArrayList<Question>();
-        awarenessQuestions = new ArrayList<Question>();
+        questions = new HashMap<Integer, Question>();
 
-        // Lifestyle
-        lifestyleQuestions.add(createQuestion(
+        questions.put(1, createQuestion(
                 "Question text",
                 QuestionType.LIFESTYLE,
                 "answer1",
@@ -27,7 +25,7 @@ public class ZooService {
                 "answer4",
                 4
         ));
-        lifestyleQuestions.add(createQuestion(
+        questions.put(2, createQuestion(
                 "Question 2 text",
                 QuestionType.LIFESTYLE,
                 "answer5",
@@ -38,21 +36,6 @@ public class ZooService {
                 3,
                 "answer8",
                 4
-        ));
-
-
-        // Awareness
-        awarenessQuestions.add(createQuestion(
-                "Question awarness text",
-                QuestionType.AWARENESS,
-                "answer1",
-                1,
-                "answer2",
-                0,
-                "answer3",
-                0,
-                "answer4",
-                0
         ));
     }
 
@@ -66,12 +49,12 @@ public class ZooService {
         return new Question(text, answers, type);
     }
 
-    public ArrayList<Question> getLifestyleQuestions() {
-        return lifestyleQuestions;
+    public Question getQuestionById(int id) {
+        return questions.get(id);
     }
 
-    public ArrayList<Question> getAwarenessQuestions() {
-        return awarenessQuestions;
+    public HashMap<Integer, Question> getQuestions() {
+        return questions;
     }
 
     public void increaseScore(int score, QuestionType type) {

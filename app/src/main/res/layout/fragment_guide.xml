@@ -13,6 +13,7 @@
 
     <fragment
         android:id="@+id/box_fragment"
+        class="ch.hackzurich.zoozurich.ui.box.BoxFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

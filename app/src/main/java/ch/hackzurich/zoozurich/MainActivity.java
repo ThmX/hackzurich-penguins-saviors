@@ -10,7 +10,7 @@ import ch.hackzurich.zoozurich.core.ZooService;
 import ch.hackzurich.zoozurich.models.ModelService;
 import ch.hackzurich.zoozurich.ui.questions.QuestionFragment;
 
-public class MainActivity extends AppCompatActivity implements QuestionFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     private ZooService zooService;
 
@@ -24,10 +24,6 @@ public class MainActivity extends AppCompatActivity implements QuestionFragment.
         zooService = new ZooService();
         modelService = new ModelService();
         modelService.load(this);
-    }
-
-    public void onQuestionAnswered(int score, QuestionType type) {
-        zooService.increaseScore(score, type);
     }
 
     public ZooService getZooService() {

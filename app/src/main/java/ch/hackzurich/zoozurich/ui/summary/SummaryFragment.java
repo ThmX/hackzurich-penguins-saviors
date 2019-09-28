@@ -28,8 +28,6 @@ public class SummaryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        zooService = ((MainActivity) getActivity()).getZooService();
-
         summaryViewModel = ViewModelProviders.of(this).get(SummaryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_summary, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
@@ -39,11 +37,6 @@ public class SummaryFragment extends Fragment {
                 textView.setText(s);
             }
         });
-
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.question_placeholder, QuestionFragment.newInstance(zooService.getLifestyleQuestions().get(0)));
-        fragmentTransaction.commit();
 
         return root;
     }
