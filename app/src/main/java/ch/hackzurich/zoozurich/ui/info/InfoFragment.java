@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
 
     private InfoViewModel mViewModel;
     private ZooService zooService;
+    private WebView infoWebview;
 
     public static InfoFragment newInstance() {
         return new InfoFragment();
@@ -49,6 +53,15 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         imageView.setVisibility(View.GONE);
 
         nextButton.setOnClickListener(this);
+        infoWebview = root.findViewById(R.id.info_webview);
+
+        infoWebview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
 
         return root;
     }
@@ -65,6 +78,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         mViewModel.getText().setValue(info.getText());
         ImageView imageView = getView().findViewById(R.id.info_image);
         imageView.setImageResource(info.getImageResourceId());
+        infoWebview.loadUrl("https://public.tableau.com/profile/gerome.wolf#!/vizhome/Penguins_15697106014940/Blatt1?:showVizHome=no&:embed=true");
         imageView.setVisibility(View.VISIBLE);
     }
 }
