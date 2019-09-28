@@ -32,7 +32,9 @@ public class AvatarFragment extends Fragment {
         zooService = ((MainActivity) getActivity()).getZooService();
 
         avatarViewModel = ViewModelProviders.of(this).get(AvatarViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_avatar, container, false);
+
+
         final TextView textView = root.findViewById(R.id.text_home);
         avatarViewModel.getText().observe(this, new Observer<String>() {
             @Override

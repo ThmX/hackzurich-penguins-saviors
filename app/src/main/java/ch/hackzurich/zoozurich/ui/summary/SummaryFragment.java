@@ -31,7 +31,7 @@ public class SummaryFragment extends Fragment {
         zooService = ((MainActivity) getActivity()).getZooService();
 
         summaryViewModel = ViewModelProviders.of(this).get(SummaryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_summary, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
         summaryViewModel.getText().observe(this, new Observer<String>() {
             @Override
