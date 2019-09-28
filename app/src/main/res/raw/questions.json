@@ -1,0 +1,25 @@
+{
+  "questions": [
+    {
+      "text": "Question text",
+      "answers": [
+        {
+          "text": "answer 1",
+          "score": 1
+        },
+        {
+          "text": "answer 2",
+          "score": 2
+        },
+        {
+          "text": "answer 3",
+          "score": 3
+        },
+        {
+          "text": "answer 4",
+          "score": 4
+        }
+      ]
+    }
+  ]
+}

@@ -16,8 +16,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import ch.hackzurich.zoozurich.R;
 import ch.hackzurich.zoozurich.core.Answer;
+import ch.hackzurich.zoozurich.core.Question;
 
 /**
  * A fragment with a Google +1 button.
@@ -49,14 +52,15 @@ public class QuestionFragment extends Fragment {
     }
 
 
-    public static QuestionFragment newInstance(String question, Answer answers_1, Answer answers_2, Answer answers_3, Answer answers_4) {
+    public static QuestionFragment newInstance(Question question) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(QUESTION, question);
-        args.putSerializable(ANSWERS_1, answers_1);
-        args.putSerializable(ANSWERS_2, answers_2);
-        args.putSerializable(ANSWERS_3, answers_3);
-        args.putSerializable(ANSWERS_4, answers_4);
+        args.putString(QUESTION, question.getQuestionText());
+        ArrayList<Answer> answers = question.getAnswers();
+        args.putSerializable(ANSWERS_1, answers.get(0));
+        args.putSerializable(ANSWERS_2, answers.get(1));
+        args.putSerializable(ANSWERS_3, answers.get(2));
+        args.putSerializable(ANSWERS_4, answers.get(3));
         fragment.setArguments(args);
         return fragment;
     }
@@ -130,7 +134,7 @@ public class QuestionFragment extends Fragment {
         questionViewModel =
                 ViewModelProviders.of(this).get(QuestionViewModel.class);
 
-        @Nullable int radioId = questionViewModel.getAnswer().getValue();
+        int radioId = questionViewModel.getAnswer().getValue();
 
         int score = -1;
 

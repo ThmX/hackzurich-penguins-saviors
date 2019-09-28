@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements QuestionFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        zooService = new ZooService();
+        zooService = new ZooService(getApplication());
     }
 
     public void onQuestionAnswered(int score) {
