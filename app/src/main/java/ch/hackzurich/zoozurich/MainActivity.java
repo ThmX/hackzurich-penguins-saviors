@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity implements QuestionFragment.
         zooService = new ZooService();
     }
 
-    public void onQuestionAnswered(String question) {
-        Log.e("TAGGG", "Question answered");
+    public void onQuestionAnswered(int score) {
+        Log.e("TAGGG", String.valueOf(score));
     }
 
     public ZooService getZooService() {

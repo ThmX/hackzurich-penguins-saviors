@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
+import ch.hackzurich.zoozurich.core.Answer;
 import ch.hackzurich.zoozurich.ui.questions.QuestionFragment;
 import ch.hackzurich.zoozurich.core.ZooService;
 
@@ -41,7 +42,11 @@ public class SummaryFragment extends Fragment {
 
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.question_placeholder, QuestionFragment.newInstance("Question", "answer1", "answer2", "answer3", "answe4"));
+        Answer answer_1 = new Answer(1, "answer1");
+        Answer answer_2 = new Answer(2, "answer2");
+        Answer answer_3 = new Answer(3, "answer3");
+        Answer answer_4 = new Answer(4, "answer4");
+        fragmentTransaction.replace(R.id.question_placeholder, QuestionFragment.newInstance("Question", answer_1, answer_2, answer_3, answer_4));
         fragmentTransaction.commit();
 
         return root;

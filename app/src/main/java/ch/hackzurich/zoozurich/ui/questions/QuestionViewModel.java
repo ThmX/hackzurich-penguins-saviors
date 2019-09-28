@@ -1,11 +1,10 @@
 package ch.hackzurich.zoozurich.ui.questions;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class QuestionViewModel extends ViewModel {
-    LiveData answer;
+    private MutableLiveData<Integer> answer;
     private MutableLiveData<String> question;
 
 
@@ -17,5 +16,12 @@ public class QuestionViewModel extends ViewModel {
             question = new MutableLiveData<String>();
         }
         return question;
+    }
+
+    public MutableLiveData<Integer> getAnswer() {
+        if (answer == null) {
+            answer = new MutableLiveData<Integer>();
+        }
+        return answer;
     }
 }
