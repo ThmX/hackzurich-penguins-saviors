@@ -6,13 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import ch.hackzurich.zoozurich.MainActivity;
 import ch.hackzurich.zoozurich.R;
@@ -24,32 +22,31 @@ public class AvatarFragment extends Fragment {
 
     private ZooService zooService;
 
-    private AvatarViewModel avatarViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         zooService = ((MainActivity) getActivity()).getZooService();
 
-        avatarViewModel = ViewModelProviders.of(this).get(AvatarViewModel.class);
         View root = inflater.inflate(R.layout.fragment_avatar, container, false);
-
-
-        final TextView textView = root.findViewById(R.id.text_home);
-        avatarViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
         final NavController navController = findNavController(container);
 
-        final Button bt = root.findViewById(R.id.home_button);
-        bt.setOnClickListener((view) -> {
-            Log.i("Zoo", "clicked");
+        final EditText etName = root.findViewById(R.id.editTextAvatar);
+
+        final ImageButton btCute = root.findViewById(R.id.btCute);
+        btCute.setOnClickListener((view) -> {
+            Log.i("Zoo", "clicked cute");
+            zooService.setName(etName.getText().toString());
+            zooService.setSpecie("Cute");
             navController.navigate(R.id.navigation_guide);
-            // TODO
+        });
+
+        final ImageButton btKing = root.findViewById(R.id.btKing);
+        btKing.setOnClickListener((view) -> {
+            Log.i("Zoo", "clicked king");
+            zooService.setName(etName.getText().toString());
+            zooService.setSpecie("King");
+            navController.navigate(R.id.navigation_guide);
         });
 
         return root;

@@ -1,16 +1,20 @@
 package ch.hackzurich.zoozurich.core;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ZooService {
+    private String name;
+    private String specie;
+
     private HashMap<Integer, Question> questions;
     private int awarenessScore = 0;
     private int lifestyleScore = 0;
 
-    public ZooService () {
+    public ZooService() {
         questions = new HashMap<Integer, Question>();
 
         questions.put(1, createQuestion(
@@ -66,5 +70,21 @@ public class ZooService {
 
         Log.e("Awareness SCORE", String.valueOf(awarenessScore));
         Log.e("Lifestyle SCORE", String.valueOf(lifestyleScore));
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSpecie() {
+        return specie;
+    }
+
+    public void setSpecie(String specie) {
+        this.specie = specie;
     }
 }
