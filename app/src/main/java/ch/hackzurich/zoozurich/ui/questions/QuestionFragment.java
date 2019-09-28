@@ -99,8 +99,9 @@ public class QuestionFragment extends Fragment {
     }
 
     public void setQuestionById(int id) {
-        final RadioGroup radioGroup = getView().findViewById(R.id.question_answers);
-        radioGroup.clearCheck();
+        // TODO Clean the form somewhere
+        // final RadioGroup radioGroup = getView().findViewById(R.id.question_answers);
+        // radioGroup.clearCheck();
 
         ZooService zooService = ((MainActivity) getActivity()).getZooService();
         question = zooService.getQuestionById(id);
