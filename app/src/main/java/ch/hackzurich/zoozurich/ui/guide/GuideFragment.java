@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.Config;
 import com.google.ar.core.Frame;
@@ -58,6 +59,8 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
 
     private BoxFragment boxFragment;
 
+    private FloatingActionButton btPhoto;
+
     private NavController navController;
 
     private float delay = 0;
@@ -72,6 +75,9 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
 
         arFragment = (ArFragment) getChildFragmentManager().findFragmentById(R.id.ar_fragment);
         boxFragment = (BoxFragment) getChildFragmentManager().findFragmentById(R.id.box_fragment);
+
+        btPhoto = root.findViewById(R.id.btPhoto);
+        btPhoto.setOnClickListener(this::onCapturePhoto);
 
         try {
             Session session = new Session(getContext());
@@ -96,6 +102,11 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onFrameUpdate);
 
         return root;
+    }
+
+    public void onCapturePhoto(View view) {
+        Log.i("Zoo", "onCapturePhoto");
+        // TODO
     }
 
     @Override

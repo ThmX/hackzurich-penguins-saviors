@@ -18,13 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <TableRow
-        android:id="@+id/tableRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/editTextAvatar"
-        tools:layout_editor_absoluteX="33dp"/>
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
@@ -48,17 +41,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.google.ar.sceneform.ux.ArFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableRow" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,17 +53,17 @@
         <ImageButton
             android:id="@+id/btKing"
             android:layout_width="match_parent"
-            android:layout_height="278dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
+            android:scaleType="centerInside"
             app:srcCompat="@mipmap/penguin_king" />
 
         <ImageButton
             android:id="@+id/btCute"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
+            android:scaleType="centerInside"
             app:srcCompat="@mipmap/penguin_cute" />
     </LinearLayout>
 
