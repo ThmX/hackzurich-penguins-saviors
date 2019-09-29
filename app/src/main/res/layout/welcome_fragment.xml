@@ -22,7 +22,7 @@
         android:paddingTop="20dp"
         android:paddingRight="30dp"
         android:paddingBottom="20dp"
-        android:text="May I introduce myself? I am your virtual Zoo guide and I am here to talk to YOU about my wild cousin’s future! They are badly affected by human actions! Today, we are together goning to find out, how much you know about this problem and in what way you actually impact my family. I have prepared two little quiz for you. You will find them always by scanning the QR Codes. Have fun and learn a lot little human" />
+        android:text="May I introduce myself? I am your virtual Zoo guide and I am here to talk to YOU about my wild cousin’s future! They are badly affected by human actions! Today, we are together going to find out, how much you know about this problem and in what way you actually impact my family. I have prepared two little quiz for you. You will find them always by scanning the QR Codes. Have fun and learn a lot little human" />
 
     <Button
         android:id="@+id/lets_get_started_btn"
