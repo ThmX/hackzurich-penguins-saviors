@@ -16,6 +16,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_welcome"
+        android:name="ch.hackzurich.zoozurich.ui.welcome.WelcomeFragment"
+        android:label="welcome"
+        tools:layout="@layout/welcome_fragment" />
+
+    <fragment
         android:id="@+id/navigation_guide"
         android:name="ch.hackzurich.zoozurich.ui.guide.GuideFragment"
         android:label="@string/title_guide"

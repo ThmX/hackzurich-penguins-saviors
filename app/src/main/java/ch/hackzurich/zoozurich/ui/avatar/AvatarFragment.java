@@ -38,7 +38,7 @@ public class AvatarFragment extends Fragment {
             Log.i("Zoo", "clicked cute");
             zooService.setName(etName.getText().toString());
             zooService.setSpecie("Cute");
-            navController.navigate(R.id.navigation_guide);
+            navController.navigate(R.id.navigation_welcome);
         });
 
         final ImageButton btKing = root.findViewById(R.id.btKing);
@@ -46,7 +46,7 @@ public class AvatarFragment extends Fragment {
             Log.i("Zoo", "clicked king");
             zooService.setName(etName.getText().toString());
             zooService.setSpecie("King");
-            navController.navigate(R.id.navigation_guide);
+            navController.navigate(R.id.navigation_welcome);
         });
 
         return root;
