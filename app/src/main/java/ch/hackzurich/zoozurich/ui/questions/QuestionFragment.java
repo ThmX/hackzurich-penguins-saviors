@@ -105,7 +105,14 @@ public class QuestionFragment extends Fragment {
         question = zooService.getQuestionById(id);
         ArrayList<Answer> answers = question.getAnswers();
 
+        final TextView categoryText = getView().findViewById(R.id.category_text);
+
         // Set initial values
+        if (question.getType() == QuestionType.AWARENESS) {
+            categoryText.setText("Awareness");
+        } else {
+            categoryText.setText("Lifestyle");
+        }
         questionViewModel.getQuestion().setValue(question.getText());
         questionViewModel.getAnswer1Text().setValue(answers.get(0).getText());
         questionViewModel.getAnswer2Text().setValue(answers.get(1).getText());
