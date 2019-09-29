@@ -1,9 +1,14 @@
 package ch.hackzurich.zoozurich.ui.guide;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +39,11 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOption
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -76,6 +86,8 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         arFragment = (ArFragment) getChildFragmentManager().findFragmentById(R.id.ar_fragment);
         boxFragment = (BoxFragment) getChildFragmentManager().findFragmentById(R.id.box_fragment);
 
+        modelService.load(getContext());
+
         btPhoto = root.findViewById(R.id.btPhoto);
         btPhoto.setOnClickListener(this::onCapturePhoto);
 
@@ -104,9 +116,9 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         return root;
     }
 
-    public void onCapturePhoto(View view) {
+    private void onCapturePhoto(View view) {
         Log.i("Zoo", "onCapturePhoto");
-        // TODO
+        // saveImage();
     }
 
     public void hideAR() {
@@ -171,6 +183,7 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
         anchorNode.setParent(arFragment.getArSceneView().getScene());
 
         getModelLoader().setParent(anchorNode);
+        getModelLoader().animate();
 
         Log.i("Zoo", "Displayed");
 
@@ -225,15 +238,46 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
                 .addOnFailureListener(this);
     }
 
+    public static Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable = view.getForeground();
+        if (bgDrawable != null)
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        else
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
+    }
+
     private void saveImage() {
-        Frame frame = arFragment.getArSceneView().getArFrame();
-        try {
-            Image image = frame.acquireCameraImage();
 
+        File filesDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES); // getFilesDir();
+        File zoohDir = new File(filesDir, "Zooh");
 
-        } catch (NotYetAvailableException e) {
+        if (!zoohDir.exists()) {
+            zoohDir.mkdir();
+        }
+
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
+        File imgFile = new File(zoohDir, "zooh-" + timestamp + ".png");
+
+        Log.i("Zoo", "Saving to " + imgFile.getAbsolutePath());
+
+        Bitmap bitmap = getBitmapFromView(arFragment.getArSceneView());
+        try (FileOutputStream out = new FileOutputStream(imgFile)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public NavController getNavController() {

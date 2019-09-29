@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         zooService = new ZooService();
         modelService = new ModelService();
-        modelService.load(this);
     }
 
     public ZooService getZooService() {

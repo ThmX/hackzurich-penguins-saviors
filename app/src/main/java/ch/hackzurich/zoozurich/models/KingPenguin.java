@@ -26,4 +26,8 @@ public class KingPenguin extends ModelLoader {
         return skeletonNode;
     }
 
+    public void animate() {
+        // Nothing to do
+    }
+
 }

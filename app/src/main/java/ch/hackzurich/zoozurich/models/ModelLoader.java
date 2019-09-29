@@ -42,6 +42,8 @@ public abstract class ModelLoader {
 
     abstract SkeletonNode createNode(ModelRenderable modelRenderable);
 
+    abstract public void animate();
+
     ModelRenderable setRenderable(ModelRenderable modelRenderable) {
         skeletonNode = createNode(modelRenderable);
         return modelRenderable;
