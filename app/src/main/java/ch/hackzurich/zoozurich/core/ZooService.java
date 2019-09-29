@@ -41,13 +41,13 @@ public class ZooService {
             "How long did you have to travel by car to come to the Zoo Zurich?",
             QuestionType.LIFESTYLE,
             "A) We came by public transportation",
-            1,
+            4,
             "B) less than one hours",
-            2,
-            "C) one to two hours",
             3,
+            "C) one to two hours",
+            2,
             "D) more than two hours",
-            4
+            1
         ));
         questions.put(3, createQuestion(
             3,
@@ -67,13 +67,13 @@ public class ZooService {
             " What snack would you choose?",
             QuestionType.LIFESTYLE,
             "A) An apple",
-            1,
+            4,
             "B) Tomatos in a carton box",
-            2,
-            "C) Cracker in a plastic package",
             3,
+            "C) Cracker in a plastic package",
+            2,
             "D) A peeled orange in a plastic container",
-            4
+            1
         ));
         questions.put(5, createQuestion(
             5,
@@ -93,13 +93,13 @@ public class ZooService {
             " Which fish do you eat most often?",
             QuestionType.LIFESTYLE,
             "A) I don’t eat fish at all ",
-            1,
+            4,
             "B) Trout from the lake of Zurich",
-            2,
-            "C) Pangasius filet",
             3,
+            "C) Pangasius filet",
+            2,
             "D) Tuna steak",
-            4
+            1
         ));
 
         infos.put(1, new Info("It is 1 year and 8 months. With raising CO2 also the temperature raises. This also effects the ocean and fish will follow the cool water southwards. This means that our penguins have to travel farther from year to year to feed their chicks on the islands!",
