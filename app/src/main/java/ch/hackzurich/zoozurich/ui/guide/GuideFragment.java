@@ -88,8 +88,8 @@ public class GuideFragment extends Fragment implements OnSuccessListener<List<Fi
 
         modelService.load(getContext());
 
-        btPhoto = root.findViewById(R.id.btPhoto);
-        btPhoto.setOnClickListener(this::onCapturePhoto);
+        // btPhoto = root.findViewById(R.id.btPhoto);
+        // btPhoto.setOnClickListener(this::onCapturePhoto);
 
         try {
             Session session = new Session(getContext());
