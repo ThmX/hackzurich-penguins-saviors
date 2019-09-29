@@ -21,17 +21,8 @@
         android:paddingLeft="30dp"
         android:paddingTop="20dp"
         android:paddingRight="30dp"
-        android:text="May I introduce myself? I am your virtual Zoo guide and I am here to talk to YOU about my wild cousin’s future! They are badly affected by human actions! Today, we are together goning to find out, how much you know about this problem and in what way you actually impact my family. I have prepared two little quiz for you. You will find them always by scanning the QR Codes. Have fun and learn a lot little human" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp"
-        android:paddingRight="30dp"
         android:paddingBottom="20dp"
-        android:text="Thank you very much, good job! But you know, there is always room for improvement! Try are challenges that will be launched soon!" />
+        android:text="May I introduce myself? I am your virtual Zoo guide and I am here to talk to YOU about my wild cousin’s future! They are badly affected by human actions! Today, we are together goning to find out, how much you know about this problem and in what way you actually impact my family. I have prepared two little quiz for you. You will find them always by scanning the QR Codes. Have fun and learn a lot little human" />
 
     <Button
         android:id="@+id/lets_get_started_btn"
